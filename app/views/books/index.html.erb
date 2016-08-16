@@ -14,6 +14,7 @@
       <th>作者</th>
       <th>发表时间</th>
       <th>介绍</th>
+      <th>借阅过的人</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -25,6 +26,11 @@
         <td><%= book.author.name %></td>
         <td><%= book.public_at %></td>
         <td><%= book.introduction %></td>
+        <td>
+          <% book.readers.each do |reader| %>
+            <%= reader.name %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', book %></td>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
         <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
