@@ -41,17 +41,16 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
-    respond_to do |format|
-
-      @book.update(params[:book])
-
-      if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
-        format.json { render :show, status: :ok, location: @book }
-      else
-        format.html { render :edit }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
+    if @book.update(params[:book])
+      reader_ids = params[:reader_ids]
+      Subscription.where('book_id = ? ', @book.id ).delete_all
+      reader_ids.each do |reader_id|
+        Subscription.create :book_id => @book.id, :reader_id => reader_id
       end
+
+      redirect_to @book, notice: 'Book was successfully updated.'
+    else
+      render :edit
     end
   end
 

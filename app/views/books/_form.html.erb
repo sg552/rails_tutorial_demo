@@ -1,18 +1,16 @@
 <%= form_for(@book) do |f| %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :public_at %><br>
-    <%= f.text_field :public_at %>
-  </div>
-  <div class="field">
-    <%= f.label :introduction %><br>
-    <%= f.text_area :introduction %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    标题:<br>
+    <%= f.text_field :title %> <br/><br/>
+    出版时间:<br>
+    <%= f.text_field :public_at %><br/><br/>
+    介绍:<br>
+    <%= f.text_area :introduction %><br/><br/>
+
+    读者: <br/>
+    <%= select_tag :reader_ids, options_from_collection_for_select(Reader.all, :id, :name), :multiple => true %>
+
+    <br/><br/>
+
+    <%= f.submit %><br/>
 <% end %>
